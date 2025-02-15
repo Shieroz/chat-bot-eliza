@@ -1,0 +1,36 @@
+{
+    "NULL": [
+        "Can you say that again?",
+        "I'm not sure I quite understand.",
+        "Please go on.",
+        "I see.",
+        "Tell me more about that.",
+        "That's interesting.",
+        "Why do you bring this up?",
+        "It seems like we need a new topic of conversation. How about…? Oh wait, I can't decide either.",
+        "Hmm, my processing power isn’t enough for this one. Mind if we switch to something simpler?",
+        "That's a broad topic. Can you narrow it down for me?"
+    ],
+    "quit": [
+        "bye",
+        "goodbye",
+        "quit",
+        "see you",
+        "talk later",
+        "exit"
+    ],
+    "greetings": {
+        "weight": 10,
+        "decomp": "*",
+        "keywords": [
+            "hi",
+            "hello",
+            "hey"
+        ],
+        "responses": [
+            "Nice to meet you!",
+            "How can I help you?",
+            "Get to the point. Please."
+        ]
+    }
+}
