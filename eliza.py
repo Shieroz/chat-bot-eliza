@@ -22,13 +22,17 @@ for theme in data:
         for word in data[theme]["keywords"]:
             keyword_map[word] = theme
 
+# Returns a random response template
+def _choose_response(theme: str) -> str:
+    return random.choice(data[theme]["responses"])
+
 def eliza():
     """ Main program loop for the Eliza chatbot """
     while True:
         # Get user input and clean it
         user_input = input("> ")
         if user_input == "":
-            print(data["EMPTY"][random.randrange(0, len(data["EMPTY"]))])
+            print(random.choice(data["EMPTY"]))
         else:
             clean_text = _data_cleaning(user_input)
             _respond(clean_text)
@@ -50,18 +54,24 @@ def _data_cleaning(text: str) -> list:
 def _respond(input: list):
     # Find keywords in input
     keywords = dict()
+    weights = dict()
     for word in input:
         if word in keyword_map:
             keywords[word] = keyword_map[word]
+            weights[data[keyword_map[word]]["weight"]] = keyword_map[word]
 
     # If no keywords are detected defaults to NULL responses
     if not keywords:
-        print(data["NULL"][random.randrange(0, len(data["NULL"]))])
+        print(random.choice(data["NULL"]))
     # Handle program exit
     elif "quit" in keywords.values():
-        sys.exit(data["quit"]["keywords"][random.randrange(0, len(data["quit"]["keywords"]))])
+        sys.exit(_choose_response("quit"))
+    # Actual response
     else:
-        print("")
+        # Sort keywords by weights
+        weight_list = sorted(weights.keys(), reverse=True)
+        # Answer using the highest weighted keyword to keep it simple for now
+        print(_choose_response(weights[weight_list[0]]))
 
 if __name__ == "__main__":
     print("Type \"goodbye\" to quit.")

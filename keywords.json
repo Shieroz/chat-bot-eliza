@@ -20,6 +20,7 @@
         "That's a broad topic. Can you narrow it down for me?"
     ],
     "quit": {
+        "weight": 0,
         "keywords": [
             "bye",
             "goodbye",
@@ -41,7 +42,7 @@
         ]
     },
     "greetings": {
-        "weight": 100,
+        "weight": 0,
         "decomp": "*",
         "keywords": [
             "hi",
@@ -51,7 +52,20 @@
         "responses": [
             "Nice to meet you!",
             "How can I help you?",
-            "Get to the point. Please."
+            "Greetings, traveller. What have you come to me for?"
+        ]
+    },
+    "sorry": {
+        "weight": 50,
+        "decomp": "*",
+        "keywords": [
+            "sorry",
+            "apologize"
+        ],
+        "responses": [
+            "It's okay, I'm here to help.",
+            "Apologies are unecessary.",
+            "Let's unpack."
         ]
     }
 }
