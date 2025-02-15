@@ -67,5 +67,63 @@
             "Apologies are unecessary.",
             "Let's unpack."
         ]
+    },
+    "thought": {
+        "weight": 100,
+        "decomp": "*",
+        "keywords": [
+            "think",
+            "consider",
+            "see"
+        ],
+        "responses": [
+            "Why did you think about that?",
+            "Why did you consider it?",
+            "What you in your mind?",
+            "why did you see it?"
+        ]
+    },
+    "feel": {
+        "weight": 100,
+        "decomp": "*",
+        "keywords": [
+            "feel",
+            "felt"
+        ],
+        "responses": [
+            "Why did you feel that way?",
+            "What made you feel that way?",
+            "What you feel?",
+            "What you in your mind?",
+            "What you in your heart?"
+        ]
+    },
+    "dream": {
+        "weight": 100,
+        "decomp": "*",
+        "keywords": [
+            "dream",
+            "imagine"
+        ],
+        "responses": [
+            "What did you dream about?",
+            "What did you do in your imagine?",
+            "What you in your dream?",
+            "Can you explain more about your dream?"
+        ]
+    },
+    "love": {
+        "weight": 100,
+        "decomp": "*",
+        "keywords": [
+            "love",
+            "like",
+            "enjoy"
+        ],
+        "responses": [
+            "Why do you love it?",
+            "Why do you like it?",
+            "Can you explain more about it?"
+        ]
     }
 }
