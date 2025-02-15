@@ -59,14 +59,14 @@
         },
         "why don't you *?": {
             "weight": 10,
-            "pattern": "why do.* you (.*)\\??",
+            "pattern": "why do n't you (.*)\\??",
             "responses": [
                 "Do you really think I don't %1?",
                 "Would you like me to %1?"
             ]
         },
         "i can't *": {
-            "pattern": "i can\\'?t (.*)",
+            "pattern": "i ca n't (.*)",
             "responses": [
                 "What makes you think you can't %1?",
                 "Have you tried?"
@@ -119,7 +119,7 @@
                 "Tell me more about these %1 feelings.",
                 "Do you often feel %1?"
             ],
-            "weight": 100
+            "weight": 101
         },
         "i want *": {
             "pattern": "i want (.*)",
@@ -130,12 +130,12 @@
             "weight": 100
         },
         "*?": {
-            "pattern": "(.*)\\?",
+            "pattern": "(.*)\\??",
             "responses": [
                 "Why do you ask that?",
                 "Can you answer that yourself?"
             ],
-            "weight": 100
+            "weight": 0
         }
     },
     "themes": {
@@ -162,7 +162,7 @@
             ]
         },
         "greetings": {
-            "weight": 0,
+            "weight": 1,
             "keywords": [
                 "hi",
                 "hello",
@@ -196,7 +196,7 @@
             "responses": [
                 "Why did you think about that?",
                 "Why did you consider it?",
-                "What you in your mind?",
+                "What do you have in mind?",
                 "why did you see it?"
             ]
         },
@@ -209,9 +209,9 @@
             "responses": [
                 "Why did you feel that way?",
                 "What made you feel that way?",
-                "What you feel?",
+                "What do you feel?",
                 "What you in your mind?",
-                "What you in your heart?"
+                "What do you in your heart?"
             ]
         },
         "dream": {

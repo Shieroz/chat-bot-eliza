@@ -47,7 +47,7 @@ def eliza():
         # Get user input and clean it
         user_input = input("> ")
         
-        if memory["last_response"]:
+        if user_input == memory["last_response"]:
             print(random.choice(data["REPEATED"])) # Check if user is repeating themselves
         elif user_input == "":
             print(random.choice(data["EMPTY"]))
