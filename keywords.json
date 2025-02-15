@@ -1,4 +1,12 @@
 {
+    "EMPTY": [
+        "It looks like you haven't entered any text.",
+        "I’m not sure what you wanted to say.",
+        "There seems to be nothing here for me to respond to.",
+        "Did you forget what you wanted to say? It happens to the best of us!",
+        "Blank screens are my worst nightmare! Let's fill this one up.",
+        "Well, that was an interestingly short message. Mind sharing more?"
+    ],
     "NULL": [
         "Can you say that again?",
         "I'm not sure I quite understand.",
@@ -11,16 +19,29 @@
         "Hmm, my processing power isn’t enough for this one. Mind if we switch to something simpler?",
         "That's a broad topic. Can you narrow it down for me?"
     ],
-    "quit": [
-        "bye",
-        "goodbye",
-        "quit",
-        "see you",
-        "talk later",
-        "exit"
-    ],
+    "quit": {
+        "keywords": [
+            "bye",
+            "goodbye",
+            "quit",
+            "see you",
+            "talk later",
+            "exit"
+        ],
+        "responses": [
+            "I understand if you need to go. It was nice talking with you.",
+            "Thank you for chatting with me today! Feel free to come back anytime.",
+            "If there’s anything else you’d like to talk about in the future, I’m here to help.",
+            "If there's anything else on your mind in the future, I'd be happy to discuss it.",
+            "I appreciate the time we spent together. Goodbye for now!",
+            "Thanks for stopping by! Feel free to visit again when you need someone to talk to.",
+            "Okay, okay, I get the hint. But remember, I’m always here for a chat if you need me.",
+            "Well, that was quick! Don't hesitate to drop by again when you have more time.",
+            "It looks like our conversation just ended abruptly. Let’s do it again sometime!"
+        ]
+    },
     "greetings": {
-        "weight": 10,
+        "weight": 100,
         "decomp": "*",
         "keywords": [
             "hi",
