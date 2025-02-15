@@ -53,13 +53,14 @@ def _respond(input: list):
     for word in input:
         if word in keyword_map:
             keywords[word] = keyword_map[word]
-
     # If no keywords are detected defaults to NULL responses
     if not keywords:
         print(data["NULL"][random.randrange(0, len(data["NULL"]))])
     # Handle program exit
     elif "quit" in keywords.values():
         sys.exit(data["quit"]["keywords"][random.randrange(0, len(data["quit"]["keywords"]))])
+    elif "thought" in keywords.values():
+        print(data["thought"]['responses'][random.randrange(0, len(data["thought"]['responses']))])
     else:
         print("")
 

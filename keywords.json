@@ -53,5 +53,18 @@
             "How can I help you?",
             "Get to the point. Please."
         ]
+    },
+    "thought": {
+        "weight": 100,
+        "decomp": "*",
+        "keywords": [
+            "think",
+            "consider"
+        ],
+        "responses": [
+            "Why did you think about that?",
+            "Why did you consider it?",
+            "What you in your mind?"
+        ]
     }
 }
