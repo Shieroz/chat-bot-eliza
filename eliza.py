@@ -61,6 +61,10 @@ def _respond(input: list):
         sys.exit(data["quit"]["keywords"][random.randrange(0, len(data["quit"]["keywords"]))])
     elif "thought" in keywords.values():
         print(data["thought"]['responses'][random.randrange(0, len(data["thought"]['responses']))])
+    elif "feel" in keywords.values() or 'felt' in keywords.values():
+        print(data["feel"]['responses'][random.randrange(0, len(data["feel"]['responses']))])
+    elif "love" in keywords.values():
+        print(data["love"]['responses'][random.randrange(0, len(data["love"]['responses']))])
     else:
         print("")
 
