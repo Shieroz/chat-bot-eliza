@@ -40,8 +40,11 @@ patterns = [
     (r'what (.*)', ["Why do you ask?", "What do you think?"]),
     (r'because (.*)', ["Is that the real reason?", "What other reasons come to mind?"]),
     (r'i feel (.*)', ["Tell me more about these %1 feelings.", "Do you often feel %1?"]),
+    (r'i felt (.*)', ["Tell me more about these %1 feelings.", "Do you often feel %1?"]),
     (r'i want (.*)', ["Why do you want %1?", "If you got %1, what would you do?"]),
     (r'(.*)\?', ["Why do you ask that?", "Can you answer that yourself?"]),
+    (r'i dream (.*)', ["Why did you dream %1?", "Do you often dream %1?"]),
+    (r'i imagine (.*)', ["How do you imagine that?", "What do you think that means?"]),
     (r'quit', ["Goodbye!", "Take care!"]),
     (r'(.*)', ["Tell me more.", "Why do you say that?", "Can you elaborate?"])
 ]
@@ -50,9 +53,9 @@ patterns = [
 def preprocess_input(user_input):
     tokens = word_tokenize(user_input.lower())
     #filtered_tokens = [word for word in tokens if word not in stop_words]
-    #lemmatized_tokens = [lemmatizer.lemmatize(word, pos='v') for word in filtered_tokens]
-    #return ' '.join(lemmatized_tokens)
-    return ' '.join(tokens)
+    lemmatized_tokens = [lemmatizer.lemmatize(word, pos='v') for word in tokens]
+    return ' '.join(lemmatized_tokens)
+    # return ' '.join(tokens)
 
 # Function to reflect user statements
 def reflect(sentence):
