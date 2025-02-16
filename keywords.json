@@ -206,14 +206,6 @@
                 "Why do you think so?"
             ],
             "weight": 100
-        },
-        "*?": {
-            "pattern": "(.*)\\??",
-            "responses": [
-                "Why do you ask that?",
-                "Can you answer that yourself?"
-            ],
-            "weight": 0
         }
     },
     "themes": {
@@ -262,20 +254,6 @@
                 "It's okay, I'm here to help.",
                 "Apologies are unecessary.",
                 "Let's unpack."
-            ]
-        },
-        "feel": {
-            "weight": 100,
-            "keywords": [
-                "feel",
-                "felt"
-            ],
-            "responses": [
-                "Why did you feel that way?",
-                "What made you feel that way?",
-                "What do you feel?",
-                "What you in your mind?",
-                "What do you in your heart?"
             ]
         },
         "dream": {

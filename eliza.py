@@ -65,7 +65,7 @@ def _reflect(sentence: str) -> str:
     return ' '.join([data["reflections"].get(word, word) for word in words])
 
 def _data_cleaning(text: str) -> list:
-    """ Clean up the text data by removing punctuations stopwords and lemmatize nouns and verbs"""
+    """ Clean up the text data by removing stopwords and lemmatize nouns and verbs"""
     # Clean up punctuations and convert to lowercase
     tokens = tokenizer.tokenize(text.lower())
 
