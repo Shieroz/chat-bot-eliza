@@ -49,8 +49,10 @@ def eliza():
     print("Eliza: Hello, I'm Eliza. What's your name?")
     name_input = input(">")
 
-    if "my name is" in name_input.lower():
-        name_match = re.search(r"my name is (\w+)", name_input.lower())
+    #if "my name is" in name_input.lower() or "i'm" in name_input.lower() or "i am" in name_input.lower() or "im" in name_input.lower():
+    if any(phrase in name_input.lower() for phrase in ["my name is", "i'm", "i am", "im"]):
+
+        name_match = re.search(r"(?:my name is|i'm|i am|im)\s+(\w+)", name_input.lower())
         if name_match:
           memory["name"] = name_match.group(1).capitalize()
     else:
