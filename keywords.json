@@ -206,6 +206,14 @@
                 "Why do you think so?"
             ],
             "weight": 100
+        },
+        "*?": {
+            "pattern": "^(.*?)\\?",
+            "responses": [
+                "Why do you ask that?",
+                "Can you answer that yourself?"
+            ],
+            "weight": 0
         }
     },
     "themes": {

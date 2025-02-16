@@ -83,7 +83,7 @@ def _respond(input: str):
     # Match all regex pattern from json and assign weights to them
     preprocess_input = _preprocess_input(input)
     for pattern in data["patterns"]:
-        regex = re.compile(data["patterns"][pattern]["pattern"].replace("\\", "\\"), re.IGNORECASE)
+        regex = re.compile(data["patterns"][pattern]["pattern"], re.IGNORECASE)
         match = re.search(regex, preprocess_input)
         if match:
             weights[data["patterns"][pattern]["weight"]] = pattern
