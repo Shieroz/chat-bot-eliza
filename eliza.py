@@ -58,7 +58,7 @@ def eliza():
 
     while True:
         # Get user input and clean it
-        user_input = input("> ")
+        user_input = input(f"{memory['name']}: ")
         
         if user_input == memory["last_response"]:
             print(random.choice(data["REPEATED"])) # Check if user is repeating themselves
