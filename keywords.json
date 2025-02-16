@@ -276,6 +276,18 @@
                 "What you in your dream?",
                 "Can you explain more about your dream?"
             ]
+        },
+        "bad_words": {
+            "weight": 100,
+            "keywords": [
+                "fuck",
+                "weed",
+                "drug"
+            ],
+            "responses": [
+                "We are not going to talk about that.",
+                "Can we change the topic?"
+            ]
         }
     }
 }
