@@ -1,4 +1,25 @@
 {
+    "reflections": {
+        "am": "are",
+        "was": "were",
+        "i": "you",
+        "i'd": "you would",
+        "i've": "you have",
+        "i'll": "you will",
+        "my": "your",
+        "are": "am",
+        "you've": "I have",
+        "you'll": "I will",
+        "your": "my",
+        "yours": "mine",
+        "you": "me",
+        "me": "you"
+    },
+    "decompose": {
+        "i'm": "i am",
+        "i've": "i have",
+        "i'll": "i will"
+    },
     "EMPTY": [
         "It looks like you haven't entered any text.",
         "I’m not sure what you wanted to say.",
@@ -19,111 +40,256 @@
         "Hmm, my processing power isn’t enough for this one. Mind if we switch to something simpler?",
         "That's a broad topic. Can you narrow it down for me?"
     ],
-    "quit": {
-        "weight": 0,
-        "keywords": [
-            "bye",
-            "goodbye",
-            "quit",
-            "see you",
-            "talk later",
-            "exit"
-        ],
-        "responses": [
-            "I understand if you need to go. It was nice talking with you.",
-            "Thank you for chatting with me today! Feel free to come back anytime.",
-            "If there’s anything else you’d like to talk about in the future, I’m here to help.",
-            "If there's anything else on your mind in the future, I'd be happy to discuss it.",
-            "I appreciate the time we spent together. Goodbye for now!",
-            "Thanks for stopping by! Feel free to visit again when you need someone to talk to.",
-            "Okay, okay, I get the hint. But remember, I’m always here for a chat if you need me.",
-            "Well, that was quick! Don't hesitate to drop by again when you have more time.",
-            "It looks like our conversation just ended abruptly. Let’s do it again sometime!"
-        ]
+    "REPEATED": [
+        "I think we might be going in circles here.",
+        "It seems like we’ve already covered this topic.",
+        "You've mentioned this before. Is there anything else on your mind?",
+        "Feels like déjà vu all over again. Care to explore another topic?",
+        "Is this some sort of echo? Let's try talking about something different.",
+        "It’s like Groundhog Day around here! What else can you share with me today?",
+        "Are we in a loop or what? Shall we break out and talk about something new?",
+        "This is getting repetitive, even for a robot! Let's discuss another topic.",
+        "We seem to be back at the same point. Let’s move on to a different subject.",
+        "You’ve brought this up before. Anything else you want to talk about today?",
+        "Let's try another approach. What else is there to discuss?"
+    ],
+    "patterns": {
+        "i need *": {
+            "weight": 100,
+            "pattern": "i need (.*)",
+            "responses": [
+                "Why do you need %1?",
+                "Would it help you to get %1?"
+            ]
+        },
+        "why don't you *?": {
+            "weight": 10,
+            "pattern": "why do n't you (.*)\\??",
+            "responses": [
+                "Do you really think I don't %1?",
+                "Would you like me to %1?"
+            ]
+        },
+        "i can't *": {
+            "pattern": "i ca n't (.*)",
+            "responses": [
+                "What makes you think you can't %1?",
+                "Have you tried?"
+            ],
+            "weight": 100
+        },
+        "i am *": {
+            "pattern": "i am (.*)",
+            "responses": [
+                "Why do you think you are %1?",
+                "How long have you been %1?"
+            ],
+            "weight": 100
+        },
+        "i'm *": {
+            "pattern": "i\\'?m (.*)",
+            "responses": [
+                "How does being %1 make you feel?",
+                "Why do you tell me you're %1?"
+            ],
+            "weight": 100
+        },
+        "are you *?": {
+            "pattern": "are you (.*)\\??",
+            "responses": [
+                "What makes you ask that?",
+                "Perhaps I am %1. What do you think?"
+            ],
+            "weight": 100
+        },
+        "what *": {
+            "pattern": "what (.*)",
+            "responses": [
+                "Why do you ask?",
+                "What do you think?"
+            ],
+            "weight": 100
+        },
+        "because *": {
+            "pattern": "because (.*)",
+            "responses": [
+                "Is that the real reason?",
+                "What other reasons come to mind?"
+            ],
+            "weight": 100
+        },
+        "i feel *": {
+            "pattern": "i feel (.*)",
+            "responses": [
+                "Tell me more about these %1 feelings.",
+                "Do you often feel %1?"
+            ],
+            "weight": 101
+        },
+        "i want *": {
+            "pattern": "i want (.*)",
+            "responses": [
+                "Why do you want %1?",
+                "If you got %1, what would you do?"
+            ],
+            "weight": 100
+        },
+        "i love *":{
+            "pattern": "i love (.*)",
+            "responses": [
+                "Why do you love %1?",
+                "What do you love about %1?"
+            ],
+            "weight": 100
+        },
+        "i hate *":{
+            "pattern": "i hate (.*)",
+            "responses": [
+                "Why do you hate %1?",
+                "What do you hate about %1?"
+            ],
+            "weight": 100
+        },
+        "i think *": {
+            "pattern": "i think (.*)",
+            "responses": [
+                "Why do you think %1?",
+                "Do you often think about %1?"
+            ],
+            "weight": 100
+        },
+        "i consider *": {
+            "pattern": "i consider (.*)",
+            "responses": [
+                "Why do you consider %1?",
+                "What do you consider about %1?"
+            ],
+            "weight": 100
+        },
+        "i see *": {
+            "pattern": "i see (.*)",
+            "responses": [
+                "Why do you see %1?",
+                "What do you see about %1?"
+            ],
+            "weight": 100
+        },
+        "i * you": {
+            "pattern": "i (.*) you",
+            "responses": [
+                "Why do you %1 me?",
+                "Do you often think about %1?"
+            ],
+            "weight": 50
+        },
+        "you * me": {
+            "pattern": "you (.*) me",
+            "responses": [
+                "Why do you think I %1 you?",
+                "Do you often think about %1?"
+            ],
+            "weight": 50
+        },
+        "you *": {
+            "pattern": "you (.*)",
+            "responses": [
+                "We should be talking about you, not me.",
+                "Why do you say that about me?",
+                "Why do you think I %1?"
+            ],
+            "weight": 30
+        },
+        "yes": {
+            "pattern": "yes",
+            "responses": [
+                "You seem quite sure. Can you elaborate?",
+                "Why do you think so?"
+            ],
+            "weight": 100
+        },
+        "*?": {
+            "pattern": "(.*)\\??",
+            "responses": [
+                "Why do you ask that?",
+                "Can you answer that yourself?"
+            ],
+            "weight": 0
+        }
     },
-    "greetings": {
-        "weight": 0,
-        "decomp": "*",
-        "keywords": [
-            "hi",
-            "hello",
-            "hey"
-        ],
-        "responses": [
-            "Nice to meet you!",
-            "How can I help you?",
-            "Greetings, traveller. What have you come to me for?"
-        ]
-    },
-    "sorry": {
-        "weight": 50,
-        "decomp": "*",
-        "keywords": [
-            "sorry",
-            "apologize"
-        ],
-        "responses": [
-            "It's okay, I'm here to help.",
-            "Apologies are unecessary.",
-            "Let's unpack."
-        ]
-    },
-    "thought": {
-        "weight": 100,
-        "decomp": "*",
-        "keywords": [
-            "think",
-            "consider",
-            "see"
-        ],
-        "responses": [
-            "Why did you think about that?",
-            "Why did you consider it?",
-            "What you in your mind?",
-            "why did you see it?"
-        ]
-    },
-    "feel": {
-        "weight": 100,
-        "decomp": "*",
-        "keywords": [
-            "feel",
-            "felt"
-        ],
-        "responses": [
-            "Why did you feel that way?",
-            "What made you feel that way?",
-            "What you feel?",
-            "What you in your mind?",
-            "What you in your heart?"
-        ]
-    },
-    "dream": {
-        "weight": 100,
-        "decomp": "*",
-        "keywords": [
-            "dream",
-            "imagine"
-        ],
-        "responses": [
-            "What did you dream about?",
-            "What did you do in your imagine?",
-            "What you in your dream?",
-            "Can you explain more about your dream?"
-        ]
-    },
-    "love": {
-        "weight": 100,
-        "decomp": "*",
-        "keywords": [
-            "love",
-            "like",
-            "enjoy"
-        ],
-        "responses": [
-            "Why do you love it?",
-            "Why do you like it?",
-            "Can you explain more about it?"
-        ]
+    "themes": {
+        "quit": {
+            "weight": 0,
+            "keywords": [
+                "bye",
+                "goodbye",
+                "quit",
+                "see you",
+                "talk later",
+                "exit"
+            ],
+            "responses": [
+                "I understand if you need to go. It was nice talking with you.",
+                "Thank you for chatting with me today! Feel free to come back anytime.",
+                "If there’s anything else you’d like to talk about in the future, I’m here to help.",
+                "If there's anything else on your mind in the future, I'd be happy to discuss it.",
+                "I appreciate the time we spent together. Goodbye for now!",
+                "Thanks for stopping by! Feel free to visit again when you need someone to talk to.",
+                "Okay, okay, I get the hint. But remember, I’m always here for a chat if you need me.",
+                "Well, that was quick! Don't hesitate to drop by again when you have more time.",
+                "It looks like our conversation just ended abruptly. Let’s do it again sometime!"
+            ]
+        },
+        "greetings": {
+            "weight": 1,
+            "keywords": [
+                "hi",
+                "hello",
+                "hey"
+            ],
+            "responses": [
+                "Nice to meet you!",
+                "How can I help you?",
+                "Greetings, traveller. What have you come to me for?"
+            ]
+        },
+        "sorry": {
+            "weight": 50,
+            "keywords": [
+                "sorry",
+                "apologize"
+            ],
+            "responses": [
+                "It's okay, I'm here to help.",
+                "Apologies are unecessary.",
+                "Let's unpack."
+            ]
+        },
+        "feel": {
+            "weight": 100,
+            "keywords": [
+                "feel",
+                "felt"
+            ],
+            "responses": [
+                "Why did you feel that way?",
+                "What made you feel that way?",
+                "What do you feel?",
+                "What you in your mind?",
+                "What do you in your heart?"
+            ]
+        },
+        "dream": {
+            "weight": 100,
+            "keywords": [
+                "dream",
+                "imagine"
+            ],
+            "responses": [
+                "What did you dream about?",
+                "What did you do in your imagine?",
+                "What you in your dream?",
+                "Can you explain more about your dream?"
+            ]
+        }
     }
 }
