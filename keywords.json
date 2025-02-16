@@ -15,6 +15,11 @@
         "you": "me",
         "me": "you"
     },
+    "decompose": {
+        "i'm": "i am",
+        "i've": "i have",
+        "i'll": "i will"
+    },
     "EMPTY": [
         "It looks like you haven't entered any text.",
         "I’m not sure what you wanted to say.",
@@ -129,8 +134,81 @@
             ],
             "weight": 100
         },
+        "i love *":{
+            "pattern": "i love (.*)",
+            "responses": [
+                "Why do you love %1?",
+                "What do you love about %1?"
+            ],
+            "weight": 100
+        },
+        "i hate *":{
+            "pattern": "i hate (.*)",
+            "responses": [
+                "Why do you hate %1?",
+                "What do you hate about %1?"
+            ],
+            "weight": 100
+        },
+        "i think *": {
+            "pattern": "i think (.*)",
+            "responses": [
+                "Why do you think %1?",
+                "Do you often think about %1?"
+            ],
+            "weight": 100
+        },
+        "i consider *": {
+            "pattern": "i consider (.*)",
+            "responses": [
+                "Why do you consider %1?",
+                "What do you consider about %1?"
+            ],
+            "weight": 100
+        },
+        "i see *": {
+            "pattern": "i see (.*)",
+            "responses": [
+                "Why do you see %1?",
+                "What do you see about %1?"
+            ],
+            "weight": 100
+        },
+        "i * you": {
+            "pattern": "i (.*) you",
+            "responses": [
+                "Why do you %1 me?",
+                "Do you often think about %1?"
+            ],
+            "weight": 50
+        },
+        "you * me": {
+            "pattern": "you (.*) me",
+            "responses": [
+                "Why do you think I %1 you?",
+                "Do you often think about %1?"
+            ],
+            "weight": 50
+        },
+        "you *": {
+            "pattern": "you (.*)",
+            "responses": [
+                "We should be talking about you, not me.",
+                "Why do you say that about me?",
+                "Why do you think I %1?"
+            ],
+            "weight": 30
+        },
+        "yes": {
+            "pattern": "yes",
+            "responses": [
+                "You seem quite sure. Can you elaborate?",
+                "Why do you think so?"
+            ],
+            "weight": 100
+        },
         "*?": {
-            "pattern": "(.*)\\??",
+            "pattern": "^(.*?)\\?",
             "responses": [
                 "Why do you ask that?",
                 "Can you answer that yourself?"
@@ -186,34 +264,6 @@
                 "Let's unpack."
             ]
         },
-        "thought": {
-            "weight": 100,
-            "keywords": [
-                "think",
-                "consider",
-                "see"
-            ],
-            "responses": [
-                "Why did you think about that?",
-                "Why did you consider it?",
-                "What do you have in mind?",
-                "why did you see it?"
-            ]
-        },
-        "feel": {
-            "weight": 100,
-            "keywords": [
-                "feel",
-                "felt"
-            ],
-            "responses": [
-                "Why did you feel that way?",
-                "What made you feel that way?",
-                "What do you feel?",
-                "What you in your mind?",
-                "What do you in your heart?"
-            ]
-        },
         "dream": {
             "weight": 100,
             "keywords": [
@@ -227,17 +277,16 @@
                 "Can you explain more about your dream?"
             ]
         },
-        "love": {
+        "bad_words": {
             "weight": 100,
             "keywords": [
-                "love",
-                "like",
-                "enjoy"
+                "fuck",
+                "weed",
+                "drug"
             ],
             "responses": [
-                "Why do you love it?",
-                "Why do you like it?",
-                "Can you explain more about it?"
+                "We are not going to talk about that.",
+                "Can we change the topic?"
             ]
         }
     }

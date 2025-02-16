@@ -29,7 +29,6 @@ def _choose_response(key: str) -> str:
     response = ""
     # Whether to look in regex pattern or themes keywords
     choice = "patterns" if key not in data["themes"] else "themes"
-
     # Replace all place holders with user response
     response = random.choice(data[choice][key]["responses"])
     match = re.search(r'(%\d+)', response)
@@ -43,9 +42,23 @@ def _choose_response(key: str) -> str:
 
 def eliza():
     """ Main program loop for the Eliza chatbot """
+
+    print("Eliza: Hello, I'm Eliza. What's your name?")
+    name_input = input(">")
+
+    #if "my name is" in name_input.lower() or "i'm" in name_input.lower() or "i am" in name_input.lower() or "im" in name_input.lower():
+    if any(phrase in name_input.lower() for phrase in ["my name is", "i'm", "i am", "im"]):
+
+        name_match = re.search(r"(?:my name is|i'm|i am|im)\s+(\w+)", name_input.lower())
+        if name_match:
+          memory["name"] = name_match.group(1).capitalize()
+    else:
+      memory["name"] = name_input
+    print(f"Eliza: Nice to meet you, {memory['name']}! How can I help you today?")
+
     while True:
         # Get user input and clean it
-        user_input = input("> ")
+        user_input = input(f"{memory['name']}: ")
         
         if user_input == memory["last_response"]:
             print(random.choice(data["REPEATED"])) # Check if user is repeating themselves
@@ -56,8 +69,9 @@ def eliza():
             _respond(user_input)
 
 def _preprocess_input(text: str) -> str:
-    tokens = word_tokenize(text.lower())
+    tokens = text.lower().split(" ")
     tokens = [token for token in tokens if token not in string.punctuation] # Remove punctuations
+    tokens = [data["decompose"].get(token, token) for token in tokens]
     return ' '.join(tokens)
 
 def _reflect(sentence: str) -> str:
@@ -65,7 +79,7 @@ def _reflect(sentence: str) -> str:
     return ' '.join([data["reflections"].get(word, word) for word in words])
 
 def _data_cleaning(text: str) -> list:
-    """ Clean up the text data by removing punctuations stopwords and lemmatize nouns and verbs"""
+    """ Clean up the text data by removing stopwords and lemmatize nouns and verbs"""
     # Clean up punctuations and convert to lowercase
     tokens = tokenizer.tokenize(text.lower())
 
@@ -83,12 +97,11 @@ def _respond(input: str):
     # Match all regex pattern from json and assign weights to them
     preprocess_input = _preprocess_input(input)
     for pattern in data["patterns"]:
-        regex = re.compile(data["patterns"][pattern]["pattern"].replace("\\", "\\"), re.IGNORECASE)
+        regex = re.compile(data["patterns"][pattern]["pattern"], re.IGNORECASE)
         match = re.search(regex, preprocess_input)
         if match:
             weights[data["patterns"][pattern]["weight"]] = pattern
             match_groups[pattern] = match.groups()
-
     # Find keywords in input
     lemmatized_input = _data_cleaning(input)
     keywords = dict()
