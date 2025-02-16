@@ -1,88 +1,130 @@
-import nltk
-import re
-import random
-from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
+import re, json, random, sys, string
 
-#Needs name input handling
-
+tokenizer = RegexpTokenizer(r'\w+')
 lemmatizer = WordNetLemmatizer()
-stop_words = set(stopwords.words('english'))
+match_groups = dict()
 
-# Reflection dictionary to map user phrases
-reflections = {
-    "am": "are",
-    "was": "were",
-    "i": "you",
-    "i'd": "you would",
-    "i've": "you have",
-    "i'll": "you will",
-    "my": "your",
-    "are": "am",
-    "you've": "I have",
-    "you'll": "I will",
-    "your": "my",
-    "yours": "mine",
-    "you": "me",
-    "me": "you"
+# Remember important details about the user
+memory = {
+    "last_response": "",
+    "name": ""
 }
 
-# Pattern-response pairs
-#enhance this to include emotions
-patterns = [
-    (r'i need (.*)', ["Why do you need %1?", "Would it help you to get %1?"]),
-    (r'why don\'?t you (.*)\??', ["Do you really think I don't %1?", "Would you like me to %1?"]),
-    (r'i can\'?t (.*)', ["What makes you think you can't %1?", "Have you tried?"]),
-    (r'i am (.*)', ["Why do you think you are %1?", "How long have you been %1?"]),
-    (r'i\'?m (.*)', ["How does being %1 make you feel?", "Why do you tell me you're %1?"]),
-    (r'are you (.*)\??', ["What makes you ask that?", "Perhaps I am %1. What do you think?"]),
-    (r'what (.*)', ["Why do you ask?", "What do you think?"]),
-    (r'because (.*)', ["Is that the real reason?", "What other reasons come to mind?"]),
-    (r'i feel (.*)', ["Tell me more about these %1 feelings.", "Do you often feel %1?"]),
-    (r'i want (.*)', ["Why do you want %1?", "If you got %1, what would you do?"]),
-    (r'(.*)\?', ["Why do you ask that?", "Can you answer that yourself?"]),
-    (r'quit', ["Goodbye!", "Take care!"]),
-    (r'(.*)', ["Tell me more.", "Why do you say that?", "Can you elaborate?"])
-]
+# Load the responses of eliza
+with open('/keywords.json', 'r') as file:
+    data = json.load(file)
 
-# Preprocessing function
-def preprocess_input(user_input):
-    tokens = word_tokenize(user_input.lower())
-    #filtered_tokens = [word for word in tokens if word not in stop_words]
-    #lemmatized_tokens = [lemmatizer.lemmatize(word, pos='v') for word in filtered_tokens]
-    #return ' '.join(lemmatized_tokens)
-    return ' '.join(tokens)
+# Reverse dictionary to map from keywords to themes
+keyword_map = dict()
+for theme in data["themes"]:
+    for word in data["themes"][theme]["keywords"]:
+        keyword_map[word] = theme
 
-# Function to reflect user statements
-def reflect(sentence):
-    words = sentence.lower().split()
-    return ' '.join([reflections.get(word, word) for word in words])
+# Returns a random response template
+def _choose_response(key: str) -> str:
+    response = ""
+    # Whether to look in regex pattern or themes keywords
+    choice = "patterns" if key not in data["themes"] else "themes"
+    # Replace all place holders with user response
+    response = random.choice(data[choice][key]["responses"])
+    match = re.search(r'(%\d+)', response)
+    if match:
+        i = 0
+        for group in match.groups():
+            response = response.replace(group, _reflect(match_groups[key][i]))
+            i += 1
 
-def generate_response(user_input):
-    preprocessed_input = preprocess_input(user_input)
-    #print(f"Preprocessed Input: {preprocessed_input}")  # Debugging line
+    if "%name%" in response:
+        response = response.replace("%name%", memory["name"])
 
-    for pattern, responses in patterns:
-        match = re.search(pattern, preprocessed_input, re.IGNORECASE)
-        if match:
-            #print(f"Matched Pattern: {pattern}")  # Debugging line
-            response = random.choice(responses)
-            if "%1" in response:
-                response = response.replace("%1", reflect(match.group(1)))
-            return response
-    return "I'm not sure I understand. Can you tell me more?"
+    return response
 
-def eliza_chatbot():
-    print("Eliza: Hi! I'm Eliza, a psychotherapist. What's on your mind?")
+def eliza():
+    """ Main program loop for the Eliza chatbot """
+
+    print("Eliza: Hello, I'm Eliza. What's your name?")
+    name_input = input(">")
+
+    if "my name is" in name_input.lower():
+        name_match = re.search(r"my name is (\w+)", name_input.lower())
+        if name_match:
+          memory["name"] = name_match.group(1).capitalize()
+    else:
+      memory["name"] = name_input
+    print(f"Eliza: Nice to meet you, {memory['name']}! How can I help you today?")
 
     while True:
-        user_input = input("You: ")
-        if user_input.lower() == "quit":
-            print("Eliza: Goodbye! Take care!")
-            break
-        response = generate_response(user_input)
-        print(f"Eliza: {response}")
+        # Get user input and clean it
+        user_input = input(f"{memory['name']}: ")
+        
+        if user_input == memory["last_response"]:
+            print("Eliza: "+random.choice(data["REPEATED"])) # Check if user is repeating themselves
+        elif user_input == "":
+            print("Eliza: "+random.choice(data["EMPTY"]))
+        else:
+            memory["last_response"] = user_input
+            _respond(user_input)
 
-eliza_chatbot()
+def _preprocess_input(text: str) -> str:
+    tokens = text.lower().split(" ")
+    tokens = [token for token in tokens if token not in string.punctuation] # Remove punctuations
+    tokens = [data["decompose"].get(token, token) for token in tokens]
+    return ' '.join(tokens)
 
+def _reflect(sentence: str) -> str:
+    words = sentence.lower().split()
+    return ' '.join([data["reflections"].get(word, word) for word in words])
+
+def _data_cleaning(text: str) -> list:
+    """ Clean up the text data by removing stopwords and lemmatize nouns and verbs"""
+    # Clean up punctuations and convert to lowercase
+    tokens = tokenizer.tokenize(text.lower())
+
+    # Clean up stopwords
+    tokens = [token for token in tokens if token not in stopwords.words('english')]
+
+    # Lemmatize nouns, verbs, adjectives and adverbs
+    for i in ['n', 'v', 'a', 'r']:
+        tokens = [lemmatizer.lemmatize(word, pos=i) for word in tokens]
+
+    return tokens
+
+def _respond(input: str):
+    weights = dict()
+    # Match all regex pattern from json and assign weights to them
+    preprocess_input = _preprocess_input(input)
+    for pattern in data["patterns"]:
+        regex = re.compile(data["patterns"][pattern]["pattern"], re.IGNORECASE)
+        match = re.search(regex, preprocess_input)
+        if match:
+            weights[data["patterns"][pattern]["weight"]] = pattern
+            match_groups[pattern] = match.groups()
+    # Find keywords in input
+    lemmatized_input = _data_cleaning(input)
+    keywords = dict()
+    for word in lemmatized_input:
+        if word in keyword_map:
+            keywords[word] = keyword_map[word]
+            weights[data["themes"][keyword_map[word]]["weight"]] = keyword_map[word]
+
+    # If no keywords are detected defaults to NULL responses
+    if not weights:
+        print("Eliza: "+random.choice(data["NULL"]))
+    # Handle program exit
+    elif "quit" in keywords.values():
+        print("Eliza: "+_choose_response("quit"))
+        sys.exit(0)
+    # Actual response
+    else:
+        # Sort keywords by weights
+        weight_list = sorted(weights.keys(), reverse=True)
+        # Answer using the highest weighted keyword to keep it simple for now
+        print("Eliza: "+_choose_response(weights[weight_list[0]]))
+
+if __name__ == "__main__":
+    print("Type \"goodbye\" to quit.")
+    eliza()
