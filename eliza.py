@@ -29,7 +29,6 @@ def _choose_response(key: str) -> str:
     response = ""
     # Whether to look in regex pattern or themes keywords
     choice = "patterns" if key not in data["themes"] else "themes"
-
     # Replace all place holders with user response
     response = random.choice(data[choice][key]["responses"])
     match = re.search(r'(%\d+)', response)
@@ -56,8 +55,9 @@ def eliza():
             _respond(user_input)
 
 def _preprocess_input(text: str) -> str:
-    tokens = word_tokenize(text.lower())
+    tokens = text.lower().split(" ")
     tokens = [token for token in tokens if token not in string.punctuation] # Remove punctuations
+    tokens = [data["decompose"].get(token, token) for token in tokens]
     return ' '.join(tokens)
 
 def _reflect(sentence: str) -> str:
@@ -88,7 +88,6 @@ def _respond(input: str):
         if match:
             weights[data["patterns"][pattern]["weight"]] = pattern
             match_groups[pattern] = match.groups()
-
     # Find keywords in input
     lemmatized_input = _data_cleaning(input)
     keywords = dict()
